@@ -14,8 +14,39 @@ session   = DBSession()
 
 
 @app.route('/')
-def helloWorld():
-  return "Hello world!"
+def showCatalog():
+  """Base route. Shows all categories and latest items."""
+  return "Full catalog..."
+
+
+@app.route('/catalog/<int:catalog_id>/items')
+def showItems(catalog_id):
+  """Shows all items for a catalog entry."""
+  return "All items for a catalog entry..."
+
+
+@app.route('/catalog/<int:catalog_id>/<int:item_id>')
+def showItem(catalog_id, item_id):
+  """Shows a particular item from a catalog entry."""
+  return "A particular item for a catalog entry..."
+
+
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/edit')
+def editItem(catalog_id, item_id):
+  """Edits a particular item from a catalog entry."""
+  return "Edit a particular item for a catalog entry..."
+
+
+@app.route('/catalog/<int:catalog_id>/<int:item_id>/delete')
+def deleteItem(catalog_id, item_id):
+  """Deletes a particular item from a catalog entry."""
+  return "Delete a particular item for a catalog entry..."
+
+
+@app.route('/catalog.json')
+def showCatalogJSON():
+  """Shows catalog in JSON format"""
+  return "Show catalog in JSON format..."
 
 
 if __name__ == '__main__':
