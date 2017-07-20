@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Category, Item
@@ -14,9 +14,10 @@ session   = DBSession()
 
 
 @app.route('/')
-def showCatalog():
+def showCategories():
   """Base route. Shows all categories and latest items."""
-  return "Full catalog..."
+  categories = session.query(Category).all()
+  return render_template('categories.html', categories = categories)
 
 
 @app.route('/catalog/<int:catalog_id>/items')
