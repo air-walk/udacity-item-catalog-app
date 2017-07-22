@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Category, Item
@@ -14,10 +14,55 @@ session   = DBSession()
 
 
 @app.route('/')
+@app.route('/categories')
 def showCategories():
   """Base route. Shows all categories and latest items."""
   categories = session.query(Category).all()
   return render_template('categories.html', categories = categories)
+
+
+@app.route('/catalog/new/', methods=['GET', 'POST'])
+@app.route('/categories/new/', methods=['GET', 'POST'])
+def newCategory():
+  """Creates a new category."""
+  if request.method == 'POST':
+    newCategory = Category(name = request.form['name'])
+    session.add(newCategory)
+    session.commit()
+
+    return redirect(url_for('showCategories'))
+  else:
+    return render_template('newCategory.html')
+
+
+@app.route('/catalog/<int:category_id>/edit/', methods=['GET', 'POST'])
+@app.route('/categories/<int:category_id>/edit/', methods=['GET', 'POST'])
+def editCategory(category_id):
+  """Edits a category."""
+  category = session.query(Category).filter_by(id = category_id).one()
+
+  if request.method == 'POST':
+    category.name = request.form['name']
+    session.commit()
+
+    return redirect(url_for('showCategories'))
+  else:
+    return render_template('editCategory.html', category = category)
+
+
+@app.route('/catalog/<int:category_id>/delete/', methods=['GET', 'POST'])
+@app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
+def deleteCategory(category_id):
+  """Deletes a category."""
+  category = session.query(Category).filter_by(id = category_id).one()
+
+  if request.method == 'POST':
+    session.delete(category)
+    session.commit()
+
+    return redirect(url_for('showCategories'))
+  else:
+    return render_template('deleteCategory.html', category = category)
 
 
 @app.route('/catalog/<int:catalog_id>/items')
