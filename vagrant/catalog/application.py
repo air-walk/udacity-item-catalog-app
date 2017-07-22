@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Category, Item
@@ -30,6 +30,7 @@ def newCategory():
     session.add(newCategory)
     session.commit()
 
+    flash("Category creation successful!")
     return redirect(url_for('showCategories'))
   else:
     return render_template('newCategory.html')
@@ -45,6 +46,7 @@ def editCategory(category_id):
     category.name = request.form['name']
     session.commit()
 
+    flash("Category edit successful!")
     return redirect(url_for('showCategories'))
   else:
     return render_template('editCategory.html', category = category)
@@ -60,6 +62,7 @@ def deleteCategory(category_id):
     session.delete(category)
     session.commit()
 
+    flash("Category deletion successful!")
     return redirect(url_for('showCategories'))
   else:
     return render_template('deleteCategory.html', category = category)
@@ -97,6 +100,7 @@ def newItem(category_id):
     session.add(newItem)
     session.commit()
 
+    flash("Item creation successful!")
     return redirect(url_for('showItems', category_id = category_id))
   else:
     return render_template('newItem.html', category = category)
@@ -114,6 +118,7 @@ def editItem(category_id, item_id):
     item.description = request.form['description']
     session.commit()
 
+    flash("Item edit successful!")
     return redirect(url_for('showItems', category_id = category_id))
   else:
     return render_template('editItem.html', category = category, item = item)
@@ -130,6 +135,7 @@ def deleteItem(category_id, item_id):
     session.delete(item)
     session.commit()
 
+    flash("Item deletion successful!")
     return redirect(url_for('showItems', category_id = category_id))
   else:
     return render_template('deleteItem.html', category = category, item = item)
@@ -152,5 +158,7 @@ def showItemsJSON(category_id):
 
 
 if __name__ == '__main__':
+  # The secret key should actually be a secret, rather than out here in the open
+  app.secret_key = 'movement_lifestyle'
   app.debug    = True
   app.run(host = '0.0.0.0', port = 8000)
