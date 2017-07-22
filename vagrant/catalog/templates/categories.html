@@ -12,6 +12,9 @@
 <body>
   <nav class="navbar navbar-inverse bg-inverse fixed-top">
     <a class="navbar-brand" href="/">The Catalog-er</a>
+
+    <a href='{{url_for('login')}}' type="button" class="btn btn-default navbar-btn pull-right">
+    Login&nbsp;&nbsp;<span class="glyphicon glyphicon-log-in"></span></a>
   </nav>
 
   <div class="container">
@@ -29,7 +32,7 @@
     <div class="row">
       <div class="col-md-12">
         <h1>Categories</h1>
-        <a href = '{{url_for('newCategory')}}' class='btn btn-primary'>Add category</a>
+        <a href='{{url_for('newCategory')}}' class='btn btn-primary'>Add category</a>
 
         {% if categories|length == 0 %}
           <br><br>
