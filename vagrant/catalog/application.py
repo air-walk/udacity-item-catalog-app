@@ -139,11 +139,16 @@ def deleteItem(category_id, item_id):
 @app.route('/categories.json')
 def showCatalogJSON():
   """Shows catalog in JSON format"""
-  categories = session.query(Item).all()
-  # for category in categories:
-  #  category.
-
+  categories = session.query(Category).all()
   return jsonify(category = [category.serialize for category in categories])
+
+
+@app.route('/catalog/<int:category_id>.json')
+@app.route('/categories/<int:category_id>.json')
+def showItemsJSON(category_id):
+  """Shows items in JSON format"""
+  items = session.query(Item).filter_by(cat_id = category_id)
+  return jsonify(item = [item.serialize for item in items])
 
 
 if __name__ == '__main__':
