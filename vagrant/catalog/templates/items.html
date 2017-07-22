@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>The Catlog-er</title>
+</head>
+<body>
+  <nav class="navbar navbar-inverse bg-inverse fixed-top">
+    <a class="navbar-brand" href="/">The Catalog-er</a>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Items for {{category.name}}</h1>
+        {% for item in items %}
+          <div class="row">
+            <div class="col-md-12">
+              <h3>{{item.title}}</h3>
+              <h4>{{item.description}}</h4>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
