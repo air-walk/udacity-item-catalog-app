@@ -60,9 +60,15 @@ def deleteCategory(category_id):
 
   if request.method == 'POST':
     session.delete(category)
+
+    # Once a category is deleted, delete related items as well
+    items = session.query(Item).filter_by(cat_id = category_id).all()
+    for item in items:
+      session.delete(item)
+
     session.commit()
 
-    flash("Category deletion successful!")
+    flash("Category (and related items) deletion successful!")
     return redirect(url_for('showCategories'))
   else:
     return render_template('deleteCategory.html', category = category)
@@ -75,7 +81,7 @@ def deleteCategory(category_id):
 def showItems(category_id):
   """Shows all items for a catalog entry."""
   category = session.query(Category).filter_by(id = category_id).one()
-  items    = session.query(Item).filter_by(cat_id = category_id)
+  items    = session.query(Item).filter_by(cat_id = category_id).all()
 
   return render_template('items.html', category = category, items = items)
 
