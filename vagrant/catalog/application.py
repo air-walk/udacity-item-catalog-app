@@ -81,9 +81,7 @@ def gconnect():
 def logout():
   """Logs the user out of the application."""
   if login_session.get('email'):
-    login_session.pop('email', None)
-    login_session.pop('name', None)
-    login_session.pop('picture', None)
+    login_session.clear()
 
     flash("You successfully logged-out. Goodbye!")
   else:
