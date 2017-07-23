@@ -50,8 +50,8 @@ def gconnect():
         # Get the authorization URL and redirect the user to it, so that they
         # can grant (or deny) application's access to their Google data
         auth_uri = flow.step1_get_authorize_url()
-        print "[STEP 1]: Sending user to Google to authenticate him/herself " +
-        "and provide consent to the application.."
+        print("[STEP 1]: Sending user to Google to authenticate him/herself " +
+              "and provide consent to the application..")
 
         return redirect(auth_uri)
     else:
@@ -77,8 +77,8 @@ def gconnect():
             login_session["email"] = user_info["email"]
             login_session["name"] = user_info["name"]
             login_session["picture"] = user_info["picture"]
-            print "User identified as %s, redirecting to home page..."
-            %(login_session["email"])
+            print("User identified as %s, redirecting to home page..." %
+                  (login_session["email"]))
 
             flash("You successfully logged-in. Welcome!")
             return redirect("/")
