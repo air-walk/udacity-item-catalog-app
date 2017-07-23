@@ -38,7 +38,10 @@
     <div class="row">
       <div class="col-md-12">
         <h1>Items for {{category.name}}</h1>
-        <a href = '{{url_for('newItem', category_id = category.id)}}' class='btn btn-primary'>Add item</a>
+        {% if user_is_logged_in %}
+          <a href = '{{url_for('newItem', category_id = category.id)}}' class='btn btn-primary'>Add item</a>
+        {% endif %}
+
         {% if items|length == 0 %}
           <br><br>
           <h4><em>This category is currently devoid of items.</em></h4>
@@ -51,8 +54,11 @@
                 <a href='{{url_for('showItem', category_id = category.id, item_id = item.id)}}'>{{item.title}}</a>
               </h3>
               <h4>{{item.description}}</h4>
-              <a href='{{url_for('editItem',   category_id = category.id, item_id = item.id)}}' class='btn btn-default'>Edit</a>
-              <a href='{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}' class='btn btn-danger'>Delete</a>
+
+              {% if user_is_logged_in %}
+                <a href='{{url_for('editItem',   category_id = category.id, item_id = item.id)}}' class='btn btn-default'>Edit</a>
+                <a href='{{url_for('deleteItem', category_id = category.id, item_id = item.id)}}' class='btn btn-danger'>Delete</a>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
