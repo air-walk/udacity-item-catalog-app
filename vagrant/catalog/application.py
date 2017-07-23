@@ -104,6 +104,10 @@ def showCategories():
 @app.route('/categories/new/', methods=['GET', 'POST'])
 def newCategory():
   """Creates a new category."""
+  if not user_is_logged_in():
+    flash("Please login first in order to create a new category! Redirected to home page.")
+    return redirect("/")
+
   if request.method == 'POST':
     newCategory = Category(name = request.form['name'])
     db_session.add(newCategory)
@@ -119,6 +123,10 @@ def newCategory():
 @app.route('/categories/<int:category_id>/edit/', methods=['GET', 'POST'])
 def editCategory(category_id):
   """Edits a category."""
+  if not user_is_logged_in():
+    flash("Please login first in order to edit a category! Redirected to home page.")
+    return redirect("/")
+
   category = db_session.query(Category).filter_by(id = category_id).one()
 
   if request.method == 'POST':
@@ -135,6 +143,10 @@ def editCategory(category_id):
 @app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
   """Deletes a category."""
+  if not user_is_logged_in():
+    flash("Please login first in order to delete a category! Redirected to home page.")
+    return redirect("/")
+
   category = db_session.query(Category).filter_by(id = category_id).one()
 
   if request.method == 'POST':
@@ -178,6 +190,10 @@ def showItem(category_id, item_id):
 @app.route('/categories/<int:category_id>/new', methods=['GET', 'POST'])
 def newItem(category_id):
   """Creates an item in catalog."""
+  if not user_is_logged_in():
+    flash("Please login first in order to create a new item! Redirected to home page.")
+    return redirect("/")
+
   category = db_session.query(Category).filter_by(id = category_id).one()
 
   if request.method == 'POST':
@@ -195,6 +211,10 @@ def newItem(category_id):
 @app.route('/categories/<int:category_id>/<int:item_id>/edit', methods=['GET', 'POST'])
 def editItem(category_id, item_id):
   """Edits a particular item from a catalog entry."""
+  if not user_is_logged_in():
+    flash("Please login first in order to edit an item! Redirected to home page.")
+    return redirect("/")
+
   category = db_session.query(Category).filter_by(id = category_id).one()
   item     = db_session.query(Item).filter_by(id = item_id, cat_id = category_id).one()
 
@@ -213,6 +233,10 @@ def editItem(category_id, item_id):
 @app.route('/categories/<int:category_id>/<int:item_id>/delete', methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
   """Deletes a particular item from a catalog entry."""
+  if not user_is_logged_in():
+    flash("Please login first in order to delete an item! Redirected to home page.")
+    return redirect("/")
+
   category = db_session.query(Category).filter_by(id = category_id).one()
   item     = db_session.query(Item).filter_by(id = item_id, cat_id = category_id).one()
 
