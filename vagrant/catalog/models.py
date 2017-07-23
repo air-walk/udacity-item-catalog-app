@@ -6,21 +6,24 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
 class Category(Base):
+    """Models the Category table."""
     __tablename__ = 'category'
-    id = Column(Integer, primary_key = True)
-    name = Column(String(80), nullable = False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(80), nullable=False)
 
     @property
     def serialize(self):
-      """Return category data in a serializeable format"""
-      return {
-          'id':   self.id,
-          'name': self.name
-      }
+        """Return category data in a serializeable format"""
+        return {
+            'id':   self.id,
+            'name': self.name
+        }
 
 
 class Item(Base):
+    """Models the Item table."""
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
@@ -30,13 +33,13 @@ class Item(Base):
 
     @property
     def serialize(self):
-      """Return item data in a serializeable format"""
-      return {
-          'id':          self.id,
-          'description': self.description,
-          'title':       self.title,
-          'cat_id':      self.cat_id
-      }
+        """Return item data in a serializeable format"""
+        return {
+            'id':          self.id,
+            'description': self.description,
+            'title':       self.title,
+            'cat_id':      self.cat_id
+        }
 
 
 engine = create_engine('sqlite:///catalog.db')
