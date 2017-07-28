@@ -8,11 +8,14 @@ import json
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
+import os
 
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///catalog.db')
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+DATABASE = os.path.join(PROJECT_ROOT, 'catalog.db')
+engine = create_engine('sqlite:////' + DATABASE)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
