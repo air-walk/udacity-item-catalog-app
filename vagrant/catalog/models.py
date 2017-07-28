@@ -2,6 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
+import os
 
 
 Base = declarative_base()
@@ -42,7 +43,9 @@ class Item(Base):
         }
 
 
-engine = create_engine('sqlite:///catalog.db')
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+DATABASE = os.path.join(PROJECT_ROOT, 'catalog.db')
+engine = create_engine('sqlite:////' + DATABASE)
 
 
 Base.metadata.create_all(engine)
