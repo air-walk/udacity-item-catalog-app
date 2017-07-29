@@ -46,6 +46,7 @@ class Item(Base):
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 DATABASE = os.path.join(PROJECT_ROOT, 'catalog.db')
 engine = create_engine('sqlite:////' + DATABASE)
-
+# Replace the above two lines with the following to use PostgreSQL
+# engine = create_engine('postgresql://catalog:<password>@localhost/catalog')
 
 Base.metadata.create_all(engine)
