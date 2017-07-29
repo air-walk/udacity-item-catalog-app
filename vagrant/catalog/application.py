@@ -44,7 +44,7 @@ def gconnect():
 
     # Create the 'Flow' object based on client's secrets and scope
     flow = flow_from_clientsecrets(
-        'client_secrets.json',
+        PROJECT_ROOT + '/client_secrets.json',
         scope='https://www.googleapis.com/auth/' +
         'userinfo.email https://www.googleapis.com/auth/userinfo.profile',
         redirect_uri='http://localhost:8000/gconnect')
